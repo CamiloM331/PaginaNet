@@ -1,0 +1,49 @@
+﻿@page "/comentario"
+@using Data.Model
+@using Data.Service
+@inject IComentarioService ComentarioService
+@inject NavigationManager NavigationManager
+
+<h3>Ingresar Comentario:</h3>
+
+
+
+<EditForm Model="@comentario" OnValidSubmit="@ComentarioInsert">
+    <table>
+        <tr>
+            <td>Calificacion:</td>
+            <td><input type="text" @bind="comentario.Calificacion" required /></td>
+        </tr>
+        <tr>
+            <td>Ingresa el Comentario</td>
+            <td><input type="text" @bind="comentario.Comentario_Cliente" required /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Enviar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+
+    </table>
+   </EditForm>
+
+
+@code {
+    Comentario comentario = new Comentario();
+
+    protected async Task ComentarioInsert()
+    {
+        await ComentarioService.ComentarioInsert(comentario);
+        NavigationManager.NavigateTo("/comentario");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
+
+@code {
+
+}

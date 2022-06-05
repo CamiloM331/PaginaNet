@@ -1,0 +1,73 @@
+﻿@page "/producto"
+
+@using Data.Model
+@using Data.Service
+@inject IProductoService ProductoService
+@inject NavigationManager NavigationManager
+
+<h3>Registro de Productos</h3>
+<EditForm Model="@producto" OnValidSubmit="@ProductoInsert">
+    <table>
+
+        <tr>
+            <td>Código:</td>
+            <td><input type="text" @bind="producto.Id_Producto" required /></td>
+        </tr>
+        <tr>
+            <td>Precio del producto:</td>
+            <td><input type="text" @bind="producto.Precio_Producto" required /></td>
+        </tr>
+        <tr>
+            <td>Disponibilidad del producto:</td>
+            <td><input type="text" @bind="producto.Disponibilidad_Producto" /></td>
+        </tr>
+        <tr>
+            <td>Proovedor del producto:</td>
+            <td><input type="text" @bind="producto.Proovedor_Producto" /></td>
+        </tr>
+
+        <tr>
+            <td>Cantidad de productos en stock:</td>
+            <td><input type="text" @bind="producto.Cantidad_Producto" /></td>
+        </tr>
+
+        <tr>
+            <td>Nombre del producto:</td>
+            <td><input type="text" @bind="producto.Nombre_Producto" /></td>
+        </tr>
+        <tr>
+            <td>Garantía del producto:</td>
+            <td><input type="text" @bind="producto.Garantia_Producto" /></td>
+        </tr>
+        <tr>
+            <td>Descuento del producto:</td>
+            <td><input type="text" @bind="producto.Descuento_Producto" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+
+    </table>
+
+</EditForm>
+
+
+@code {
+    Producto producto = new Producto();
+
+    protected async Task ProductoInsert()
+    {
+        await ProductoService.ProductoInsert(producto);
+
+        NavigationManager.NavigateTo("/producto");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
+

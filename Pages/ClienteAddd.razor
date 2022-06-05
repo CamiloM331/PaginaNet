@@ -1,0 +1,68 @@
+﻿@page "/cliente"
+
+@using Data.Model
+@using Data.Service
+@inject IClienteService ClienteService
+@inject NavigationManager NavigationManager
+
+<h3>Registro de Usuario</h3>
+<EditForm Model="@cliente" OnValidSubmit="@ClienteInsert">
+    <table>
+
+        <tr>
+            <td>Nombres:</td>
+            <td><input type="text" @bind="cliente.Nombre_Cliente" required /></td>
+        </tr>
+        <tr>
+            <td>Apellidos:</td>
+            <td><input type="text" @bind="cliente.Apellido_Cliente" required /></td>
+        </tr>
+        <tr>
+            <td>Tipo De Documento:</td>
+            <td><input type="text" @bind="cliente.Tipo_Documento" /></td>
+        </tr>
+        <tr>
+            <td>Cédula:</td>
+            <td><input type="text"  @bind="cliente.Cedula_Cliente"  /></td>
+        </tr>
+
+        <tr>
+            <td>Teléfono:</td>
+            <td><input type="text" @bind="cliente.Telefono_Cliente" /></td>
+        </tr>
+
+        <tr>
+            <td>Correo:</td>
+            <td><input type="text" @bind="cliente.Correo_Cliente" /></td>
+        </tr>
+        <tr>
+            <td>Dirección:</td>
+            <td><input type="text" @bind="cliente.Direccion_Cliente" /></td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Adicionar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+
+    </table>
+
+</EditForm>
+
+@code {
+    Cliente cliente = new Cliente();
+
+    protected async Task ClienteInsert()
+    {
+        await ClienteService.ClienteInsert(cliente);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
